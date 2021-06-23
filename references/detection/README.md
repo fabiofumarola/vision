@@ -41,6 +41,13 @@ python -m torch.distributed.launch --nproc_per_node=8 --use_env train.py\
     --lr-steps 16 22 --aspect-ratio-group-factor 3
 ```
 
+```
+python -m torch.distributed.launch --nproc_per_node=2 --use_env train.py\
+    --dataset custom_coco --model fasterrcnn_mobilenet_v3_large_320_fpn --epochs 26 -b 12\
+    --workers 12 --sync-bn\
+    --lr-steps 16 22 --aspect-ratio-group-factor 3 --data-path /nfs_disk/datasets/custom_object_detection_v2
+```
+
 ### RetinaNet
 ```
 python -m torch.distributed.launch --nproc_per_node=8 --use_env train.py\
