@@ -39,6 +39,7 @@ def get_dataset(name, image_set, transform, data_path):
         "coco": (data_path, get_coco, 91),
         "coco_kp": (data_path, get_coco_kp, 2),
         "custom_coco": (data_path, get_custom_coco, 5),
+        "custom_coco_2": (data_path, get_custom_coco, 4),
     }
     p, ds_fn, num_classes = paths[name]
 

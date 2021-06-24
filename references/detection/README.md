@@ -42,12 +42,16 @@ python -m torch.distributed.launch --nproc_per_node=8 --use_env train.py\
 ```
 
 ```
-python -m torch.distributed.launch --nproc_per_node=2 --use_env train.py\
-    --dataset custom_coco --model fasterrcnn_mobilenet_v3_large_320_fpn --epochs 26 -b 12\
-    --workers 12 --sync-bn\
-    --lr-steps 16 22 --aspect-ratio-group-factor 3 --data-path /nfs_disk/datasets/custom_object_detection_v2
+python -m torch.distributed.launch --nproc_per_node=1 --use_env train.py\
+    --dataset custom_coco --model fasterrcnn_mobilenet_v3_large_320_fpn --epochs 40 -b 128\
+    --workers 16 \
+    --lr-steps 16 22 --aspect-ratio-group-factor 3 --data-path /nfs_disk/datasets/custom_object_detection_v2 --resume model_19.pth
 ```
 
+
+```
+CUDA_VISIBLE_DEVICE=1 python -m . train.py    --dataset custom_coco --model fasterrcnn_mobilenet_v3_large_320_fpn --epochs 40 -b 100    --workers 16     --lr-steps 16 22 --aspect-ratio-group-factor 3 --data-path /nfs_disk/datasets/custom_object_detection_v2 --resume fast32model_22.pth
+```
 ### RetinaNet
 ```
 python -m torch.distributed.launch --nproc_per_node=8 --use_env train.py\
@@ -65,10 +69,19 @@ python -m torch.distributed.launch --nproc_per_node=8 --use_env train.py\
 
 ### SSDlite320 MobileNetV3-Large
 ```
-python -m torch.distributed.launch --nproc_per_node=8 --use_env train.py\
+python -m torch.distributed.launch --nproc_per_node=2 --use_env train.py\
     --dataset coco --model ssdlite320_mobilenet_v3_large --epochs 660\
-    --aspect-ratio-group-factor 3 --lr-scheduler cosineannealinglr --lr 0.15 --batch-size 24\
-    --weight-decay 0.00004 --data-augmentation ssdlite
+    --data-path /nfs_disk/datasets/custom_object_detection_v2\
+    --aspect-ratio-group-factor 3 --lr-scheduler cosineannealinglr --lr 0.15 --batch-size 100\
+    --weight-decay 0.00004 --data-augmentation ssdlite --output-dir ssd_lite2 --dataset custom_coco
+```
+
+```
+CUDA_VISIBLE_DEVICE=1 python  train.py\
+    --dataset coco --model ssdlite320_mobilenet_v3_large --epochs 660\
+    --aspect-ratio-group-factor 3 --lr-scheduler cosineannealinglr --lr 0.15 --batch-size 32\
+    --workers 8 --data-path /nfs_disk/datasets/custom_object_detection_v2\
+    --weight-decay 0.00004 --data-augmentation ssdlite --output-dir ssd_lite1 --dataset custom_coco
 ```
 
 
